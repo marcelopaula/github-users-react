@@ -1,18 +1,17 @@
 "use client"
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-
 import { ISearchForm } from './types';
-
 import * as S from './styles';
-
 import SearchUser from '@/services/Users';
+import { save } from '@/Store/slices/user';
 
 const Search = () => {
+    const dispatch = useDispatch();
     const { control, handleSubmit } = useForm<ISearchForm>({
         defaultValues: {
             username: ''
@@ -21,7 +20,8 @@ const Search = () => {
 
     const onSubmit:SubmitHandler<ISearchForm> = async (data) => {
         const { username } = data;
-        const result = await SearchUser(username);
+        const result: any = await SearchUser(username);
+        if (result) dispatch(save(result.data));
     }
 
     return(
