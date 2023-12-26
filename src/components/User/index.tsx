@@ -28,7 +28,7 @@ const User = () => {
 					</Grid>
 					<Grid container spacing={2} alignItems='center'>
 						<Grid item>
-							<PeopleAltOutlined />
+							<PeopleAltOutlined color='primary' />
 						</Grid>
 						<Grid item>
 							<Typography variant='caption'>Seguidores: {user.followers} Seguindo: {user.following}</Typography>
