@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +10,9 @@ import TableRow from '@material-ui/core/TableRow';
 import { IconButton } from '@material-ui/core';
 import StarIcon from '@mui/icons-material/Star';
 import Visibility from '@mui/icons-material/Visibility';
+import Stack from '@mui/material/Stack';
 import { IRepository } from '@/types/repository';
+import * as S from './styles';
 
 const List = ({data}:IRepository[]) => {
 	const router = useRouter();
@@ -19,14 +22,33 @@ const List = ({data}:IRepository[]) => {
 	}
 
 	return (
+		<>
+			<Typography variant='body1'>Repositórios</Typography>
+			<S.Line />
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
 						<TableRow>
-							<TableCell>Nome</TableCell>
-							<TableCell>Descrição</TableCell>
-							<TableCell>Estrelas</TableCell>
-							<TableCell>Visualizar</TableCell>
+							<TableCell>
+								<Typography variant='subtitle2'>
+									<b>Nome</b>
+								</Typography>
+							</TableCell>
+							<TableCell>
+							<Typography variant='subtitle2'>
+									<b>Descrição</b>
+								</Typography>
+							</TableCell>
+							<TableCell>
+							<Typography variant='subtitle2'>
+									<b>Estrelas</b>
+								</Typography>
+							</TableCell>
+							<TableCell>
+							<Typography variant='subtitle2'>
+									<b>Visualizar</b>
+								</Typography>
+							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -34,10 +56,23 @@ const List = ({data}:IRepository[]) => {
 							data &&
 							data.map((repo:IRepository) => (
 								<TableRow key={repo.id}>
-									<TableCell>{repo.name}</TableCell>
-									<TableCell>{repo.description}</TableCell>
 									<TableCell>
-										<StarIcon />{repo.stargazers_count}
+										<Typography variant='caption'>
+											{repo.name}
+										</Typography>
+									</TableCell>
+									<TableCell>
+										<Typography variant='caption'>
+										{repo.description}
+										</Typography>
+									</TableCell>
+									<TableCell>
+										<Stack direction="row" spacing={1} alignItems="center">
+												<StarIcon color='primary' style={{width: '20px', height: '20px'}} />
+												<Typography variant='caption'>
+													{repo.stargazers_count}
+												</Typography>
+										</Stack>
 									</TableCell>
 									<TableCell>
 									<IconButton 
@@ -53,6 +88,7 @@ const List = ({data}:IRepository[]) => {
 					</TableBody>
 				</Table>
 			</TableContainer>
+		</>
     )
 }
 
