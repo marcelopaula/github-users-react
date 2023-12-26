@@ -6,6 +6,12 @@ import { useSelector } from 'react-redux';
 import { getRepository } from '@/services/Repositories';
 import { RootState } from '@/Store';
 import { IRepository } from '@/types/repository';
+import Typography from '@material-ui/core/Typography';
+import StarIcon from '@mui/icons-material/Star';
+import LinkIcon from '@mui/icons-material/Link';
+import Stack from '@mui/material/Stack';
+import Link from '@material-ui/core/Link';
+import * as S from './styles';
  
 export default function Page({params}:{params: {name: string}}) {
   const [data, setData] = useState<IRepository>();
@@ -25,15 +31,24 @@ export default function Page({params}:{params: {name: string}}) {
       {
         data && (
           <>
-            <div>
-              <h1>{data.name}</h1>
-            </div>
-            <div>
-              estrelas: {data.stargazers_count}
-            </div>
-            <div>
-              <p>Descrição: {data.description}</p>
-            </div>
+            <S.Section>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <LinkIcon color='primary' style={{width: '20px', height: '20px'}} />
+                <Link variant='h5'>{data.name}</Link>
+                <StarIcon color='primary' style={{width: '20px', height: '20px'}} />
+                <Typography variant='body2'>
+                  {data.stargazers_count}
+                </Typography>
+              </Stack>
+            </S.Section>
+
+            <S.Section>
+            </S.Section>
+
+            <S.Section>
+              <Typography variant='body1'>Descrição:</Typography>
+              <Typography variant='caption'>{data.description}</Typography>
+            </S.Section>
           </>
         )
       }
