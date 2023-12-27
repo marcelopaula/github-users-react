@@ -1,7 +1,7 @@
 'use client'
 import { RootState } from '@/Store';
-import { Grid, Avatar } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Avatar, Typography } from '@material-ui/core';
+import { Stack } from '@mui/material';
 import PeopleAltOutlined from '@mui/icons-material/PeopleAltOutlined';
 import { useSelector } from 'react-redux';
 import * as S from './styles';
@@ -10,17 +10,17 @@ const User = () => {
 	const user = useSelector((state:RootState) => state.user);
 
 	return (
-		<S.Wrapper>
+		<>
 			<Grid container>
 				<Grid item xs={2}>
-						<Avatar
-								alt={user.name}
-								src={user.avatar_url}
-								style={{width: '100px', height: '100px'}}
-						/>
+					<Avatar
+							alt={user.name}
+							src={user.avatar_url}
+							style={{width: '100px', height: '100px'}}
+					/>
 				</Grid>
 				<Grid xs={10}>
-					<Grid container>
+					<Grid container spacing={2}>
 						<Grid item>
 							<Typography variant='h6'>{user.name}</Typography>
 							<Typography variant='body2'>Bio: {user.bio}</Typography>
@@ -31,12 +31,19 @@ const User = () => {
 							<PeopleAltOutlined color='primary' />
 						</Grid>
 						<Grid item>
-							<Typography variant='caption'>Seguidores: {user.followers} Seguindo: {user.following}</Typography>
+							<Stack spacing={1} direction='row'>
+								<Typography variant='caption'>
+									Seguidores: {user.followers}
+								</Typography>
+								<Typography variant='caption'>
+									Seguindo: {user.following}
+								</Typography>
+							</Stack>
 						</Grid>
 					</Grid>
 				</Grid>
 			</Grid>
-		</S.Wrapper>
+		</>
 	)
 };
 
