@@ -4,11 +4,19 @@ import * as S from './styles';
 import { RootState } from "@/Store";
 
 interface BreadCrumbsProps {
-  repo: string
+  repo?: string
 } 
 
 const BreadCrumbs = ({repo}: BreadCrumbsProps) => {
   const user = useSelector((state:RootState) => state.user);
+
+  const mountItem = (isLink: boolean = false, url: string, label: string) => 
+    isLink ? 
+      <Link color="inherit" href={url}>
+        {label}
+      </Link>
+    : 
+    <Typography color="textPrimary">{label}</Typography>
 
   return (
     <S.Container>
@@ -18,10 +26,9 @@ const BreadCrumbs = ({repo}: BreadCrumbsProps) => {
             <Link color="inherit" href="/">
               Pesquisar
             </Link>
-            <Link color="inherit" href={`/${user.login}`}>
-              {user.login}
-            </Link>
-            <Typography color="textPrimary">{repo}</Typography>
+            { mountItem(repo ? true : false, `/${user.login}`, user.login) }
+            
+            { repo && mountItem(false, '', repo ? repo : '') }
           </Breadcrumbs>
         </Grid>
       </Grid>
