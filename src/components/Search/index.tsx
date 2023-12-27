@@ -16,6 +16,7 @@ import { ISearchForm } from './types';
 import * as S from './styles';
 import { save } from '@/Store/slices/user';
 import SearchUser from '@/services/Users';
+import GitHub from '@mui/icons-material/GitHub';
 
 interface SearchProps {
 	innerPage?: boolean
@@ -50,7 +51,7 @@ const Search = ({innerPage = false}: SearchProps) => {
 				<S.ContainerLogo item onClick={handleClickLogo}>
 					<Grid container justifyContent='center' direction='row' spacing={1}>
 						<Grid item>
-							<S.GithubIcon />
+							<GitHub fontSize='large' />
 						</Grid>
 						<Grid item>
 							<Typography variant='h4'>Search User</Typography>
@@ -58,7 +59,7 @@ const Search = ({innerPage = false}: SearchProps) => {
 					</Grid>
 				</S.ContainerLogo>
 				<Grid item >
-					<S.Form onSubmit={handleSubmit(onSubmit)}>
+					<S.Form onSubmit={handleSubmit(onSubmit)} suppressHydrationWarning={true}>
 						<div style={{flex: 1}}>
 							<Controller 
 								name='username'
@@ -74,7 +75,7 @@ const Search = ({innerPage = false}: SearchProps) => {
 											id='search-input' 
 											variant='outlined'
 											placeholder='Digite o nome do usuário'
-											size={innerPage ? 'small' : 'normal'}
+											size='small'
 											InputProps={{
 												startAdornment: (
 													<InputAdornment position="start">
