@@ -1,6 +1,7 @@
 "use client"
 
-import React, {useEffect} from 'react';
+import React from 'react';
+import { useRouter } from 'next/navigation';
 import {
 	TextField,
 	InputAdornment,
@@ -16,8 +17,14 @@ import * as S from './styles';
 import { save } from '@/Store/slices/user';
 import SearchUser from '@/services/Users';
 
-const Search = () => {
+interface SearchProps {
+	innerPage?: boolean
+}
+
+const Search = ({innerPage = false}: SearchProps) => {
+	const router = useRouter();
 	const dispatch = useDispatch();
+
 	const { control, handleSubmit } = useForm<ISearchForm>({
 		defaultValues: {
 			username: ''
@@ -27,52 +34,65 @@ const Search = () => {
     const onSubmit:SubmitHandler<ISearchForm> = async (data) => {
 			const { username } = data;
 			const result: any = await SearchUser(username);
-			if (result) dispatch(save(result.data));
+			if (result) {
+				dispatch(save(result.data));
+				router.push(`/${result.data.login}`);
+			};
     }
+
+		const handleClickLogo = () => {
+			router.push('/');
+		}
 
     return(
 			<>
-			<Grid container justifyContent='center' spacing={1}>
-				<Grid item>
-					<S.GithubIcon />
-				</Grid>
-				<Grid item>
-					<Typography variant='h4'>Search User</Typography>
+			<Grid container direction={innerPage ? 'row' : 'column'} spacing={4}>
+				<S.ContainerLogo item onClick={handleClickLogo}>
+					<Grid container justifyContent='center' direction='row' spacing={1}>
+						<Grid item>
+							<S.GithubIcon />
+						</Grid>
+						<Grid item>
+							<Typography variant='h4'>Search User</Typography>
+						</Grid>
+					</Grid>
+				</S.ContainerLogo>
+				<Grid item >
+					<S.Form onSubmit={handleSubmit(onSubmit)}>
+						<div style={{flex: 1}}>
+							<Controller 
+								name='username'
+								control={control}
+								render={
+										({
+											field: {value, onChange}
+										}) => (
+										<TextField 
+											value={value}
+											onChange={onChange}
+											fullWidth 
+											id='search-input' 
+											variant='outlined'
+											placeholder='Digite o nome do usuário'
+											size={innerPage ? 'small' : 'normal'}
+											InputProps={{
+												startAdornment: (
+													<InputAdornment position="start">
+														<SearchIcon color='primary' />
+													</InputAdornment>
+												),
+											}}/>
+									)
+									}/>
+							</div>
+							<Button 
+								variant='contained' 
+								color='primary'>
+									Pesquisar
+							</Button>
+					</S.Form>
 				</Grid>
 			</Grid>
-
-			<S.Form onSubmit={handleSubmit(onSubmit)}>
-				<div style={{flex: 1}}>
-					<Controller 
-						name='username'
-						control={control}
-						render={
-								({
-									field: {value, onChange}
-								}) => (
-								<TextField 
-									value={value}
-									onChange={onChange}
-									fullWidth 
-									id='search-input' 
-									variant='outlined'
-									placeholder='Digite o nome do usuário'
-									InputProps={{
-										startAdornment: (
-											<InputAdornment position="start">
-												<SearchIcon color='primary' />
-											</InputAdornment>
-										),
-									}}/>
-							)
-							}/>
-					</div>
-					<Button 
-						variant='contained' 
-						color='primary'>
-							Pesquisar
-					</Button>
-			</S.Form>
 			</>
     )
 }
