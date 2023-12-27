@@ -54,7 +54,7 @@ const List = ({ data }:{ data: IRepository[] }) => {
 					<TableBody>
 						{
 							data &&
-							data.map((repo:IRepository) => (
+							data.map((repo:IRepository, i:number) => (
 								<TableRow key={repo.id}>
 									<TableCell>
 										<Typography variant='caption'>
@@ -76,6 +76,7 @@ const List = ({ data }:{ data: IRepository[] }) => {
 									</TableCell>
 									<TableCell>
 									<IconButton 
+										data-testid={`button-${i}`}
 										aria-label="delete" 
 										color="primary" 
 										onClick={() => handleClickView(repo.name)}>

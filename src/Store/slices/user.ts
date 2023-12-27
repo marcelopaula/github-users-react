@@ -36,7 +36,7 @@ export interface IUser {
     url: string;
 }
 
-const initialState: IUser = {
+export const initialState: IUser = {
     avatar_url: '',
     bio: '',
     blog: '',
