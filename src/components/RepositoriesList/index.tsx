@@ -13,7 +13,7 @@ const RepositoriesList = () => {
 
     const loadRepositories = async () => {
         const repositories = await getRepositories(user.login);
-        setRepositories(repositories.data);
+        setRepositories(repositories.data.items);
     }
 
     useEffect(() => {

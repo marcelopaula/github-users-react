@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import { IRepository } from '@/types/repository';
 import * as S from './styles';
 
-const List = ({data}:IRepository[]) => {
+const List = ({ data }:{ data: IRepository[] }) => {
 	const router = useRouter();
 
 	const handleClickView = (repoName: string) => {
@@ -23,10 +23,10 @@ const List = ({data}:IRepository[]) => {
 
 	return (
 		<>
-			<Typography variant='body1'>Repositórios</Typography>
+			<Typography variant='h6'>Repositórios</Typography>
 			<S.Line />
 			<TableContainer component={Paper}>
-				<Table>
+				<Table size='small'>
 					<TableHead>
 						<TableRow>
 							<TableCell>
