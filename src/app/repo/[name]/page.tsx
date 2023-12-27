@@ -9,11 +9,12 @@ import { IRepository } from '@/types/repository';
 import { Typography, Link, Grid } from '@material-ui/core';
 import StarIcon from '@mui/icons-material/Star';
 import LinkIcon from '@mui/icons-material/Link';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import CallSplitIcon from '@mui/icons-material/CallSplit';
 import Stack from '@mui/material/Stack';
-import * as S from './styles';
-
 import Header from '@/components/Header';
 import BreadCrumbs from '@/components/BreadCrumbs';
+import Languages from '@/components/Languages';
  
 export default function Page({params}:{params: {name: string}}) {
   const router = useRouter();
@@ -45,9 +46,21 @@ export default function Page({params}:{params: {name: string}}) {
                   <Stack direction="row" spacing={1} alignItems="center">
                     <LinkIcon color='primary' style={{width: '20px', height: '20px'}} />
                     <Link variant='h5' href={data.html_url} target='_blank'>{data.name}</Link>
-                    <StarIcon color='primary' style={{width: '20px', height: '20px'}} />
-                    <Typography variant='body2'>
+                  </Stack>
+                </Grid>
+                <Grid item xs>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <StarIcon color='primary'/>
+                    <Typography variant='caption'>
                       {data.stargazers_count}
+                    </Typography>
+                    <VisibilityIcon color='primary' fontSize='small' />
+                    <Typography variant='caption'>
+                      {data.watchers_count}
+                    </Typography>
+                    <CallSplitIcon color='primary' fontSize='small' />
+                    <Typography variant='caption'>
+                      {data.forks_count}
                     </Typography>
                   </Stack>
                 </Grid>
@@ -55,6 +68,11 @@ export default function Page({params}:{params: {name: string}}) {
                 <Grid item xs>
                   <Typography variant='body1'>Descrição:</Typography>
                   <Typography variant='caption'>{data.description}</Typography>
+                </Grid>
+
+                <Grid item xs>
+                  <Typography variant='body1'>Linguagens:</Typography>
+                  <Languages url={data.languages_url} />
                 </Grid>
               </Grid>
             </Grid>
