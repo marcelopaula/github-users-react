@@ -19,18 +19,18 @@ const User = () => {
 							style={{width: '100px', height: '100px'}}
 					/>
 				</Grid>
-				<Grid xs={10}>
+				<Grid item xs={10}>
 					<Grid container spacing={2}>
-						<Grid item>
+						<Grid item xs>
 							<Typography variant='h6'>{user.name}</Typography>
 							<Typography variant='body2'>Bio: {user.bio}</Typography>
 						</Grid>
 					</Grid>
 					<Grid container spacing={2} alignItems='center'>
-						<Grid item>
+						<Grid item xs>
 							<PeopleAltOutlined color='primary' />
 						</Grid>
-						<Grid item>
+						<Grid item xs>
 							<Stack spacing={1} direction='row'>
 								<Typography variant='caption'>
 									Seguidores: {user.followers}
