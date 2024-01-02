@@ -1,7 +1,8 @@
+import { ISort } from "@/Store/slices/sort";
 import axios from "axios";
 
-const getRepositories = (username: string) => {
-    return axios.get(`https://api.github.com/search/repositories?q=user:${username}&sort=stars&order=desc`)
+const getRepositories = (username: string, sort: ISort) => {
+    return axios.get(`https://api.github.com/search/repositories?q=user:${username}&sort=${sort.sort}&order=${sort.order}`)
 }
 
 const getRepository = (repo: string) => {

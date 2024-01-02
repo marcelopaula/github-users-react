@@ -9,16 +9,18 @@ import List from './List';
 
 const RepositoriesList = () => {
     const user = useSelector((state:RootState) => state.user);
+    const sort = useSelector((state:RootState) => state.sort);
+
     const [repositories, setRepositories] = useState<IRepository[]>([])
 
     const loadRepositories = async () => {
-        const repositories = await getRepositories(user.login);
+        const repositories = await getRepositories(user.login, sort);
         setRepositories(repositories.data.items);
     }
 
     useEffect(() => {
         if (user.login) loadRepositories();
-    }, [user])
+    }, [user, sort])
 
     return (
         <List data={repositories} />

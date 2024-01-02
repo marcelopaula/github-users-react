@@ -1,29 +1,63 @@
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { IconButton } from '@material-ui/core';
+import {
+	Typography,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	IconButton,
+	MenuItem,
+	Grid
+} from '@material-ui/core'
 import StarIcon from '@mui/icons-material/Star';
 import Visibility from '@mui/icons-material/Visibility';
 import Stack from '@mui/material/Stack';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { IRepository } from '@/types/repository';
 import * as S from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { update } from '@/Store/slices/sort';
+import { RootState } from '@/Store';
 
 const List = ({ data }:{ data: IRepository[] }) => {
+	const selectSortItems = [
+		{ label: 'mais estrelas', value: {sort: 'start', order: 'desc'} },
+		{ label: 'menos estrelas', value: {sort: 'stars', order: 'asc'} },
+	]
+	const dispatch = useDispatch();
 	const router = useRouter();
+	const sort = useSelector((state:RootState) => state.sort);
 
 	const handleClickView = (repoName: string) => {
 		router.push(`/repo/${repoName}`)
 	}
 
+	const handleChangeOrder = (event: SelectChangeEvent) => {
+		dispatch(update(JSON.parse(event.target.value)))
+	}
+
 	return (
 		<>
-			<Typography variant='h6'>Repositórios</Typography>
+			<Grid container justifyContent='space-between'>
+				<Grid item>
+					<Typography variant='h6'>Repositórios</Typography>
+				</Grid>
+				<Grid item>
+					<Select size='small' value={JSON.stringify(sort)} onChange={handleChangeOrder}>
+						{
+							selectSortItems.map((item, i) => (
+								<MenuItem 
+									value={JSON.stringify(item.value)} 
+									key={i}>{item.label}</MenuItem>
+							))
+						}
+					</Select>
+				</Grid>
+			</Grid>
 			<S.Line />
 			<TableContainer component={Paper}>
 				<Table size='small'>
